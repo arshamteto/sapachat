@@ -1,4 +1,4 @@
-import os,time,sys,threading,platform,psutil,socket,subprocess, urllib.request
+import os,time,sys,platform, urllib.request
 systemguess = platform.system().lower()
 syst = ["Linux","windows","Darwin(mac)"]
 allowed = " ".join(syst) 
@@ -33,38 +33,6 @@ def keyexit():
 packages = [
     "Pillow"
 ]
-def get_system_info():
-    info = {}
-    info["pc_name"] = socket.gethostname()
-    info["os"] = platform.system() + " " + platform.release()
-    info["os_version"] = platform.version()
-    info["architecture"] = platform.machine()
-    info["processor"] = platform.processor()
-    info["cpu_physical_cores"] = psutil.cpu_count(logical=False)
-    info["cpu_total_cores"] = psutil.cpu_count(logical=True)
-    info["cpu_frequency"] = psutil.cpu_freq()._asdict() if psutil.cpu_freq() else None
-    info["ram_total_gb"] = round(psutil.virtual_memory().total / (1024**3), 2)
-    info["ram_available_gb"] = round(psutil.virtual_memory().available / (1024**3), 2)
-    info["disk_total_gb"] = round(psutil.disk_usage("/").total / (1024**3), 2)
-    
-    try:
-        if platform.system() == "Windows":
-            gpu = subprocess.check_output("wmic path win32_VideoController get name", shell=True).decode().split("\n")[1].strip()
-            info["gpu"] = gpu
-        elif platform.system() == "Linux":
-            gpu = subprocess.check_output("lspci | grep -i vga", shell=True).decode().strip()
-            info["gpu"] = gpu
-        elif platform.system() == "Darwin":
-            gpu = subprocess.check_output("system_profiler SPDisplaysDataType | grep Chipset", shell=True).decode().strip()
-            limit = True
-            info["gpu"] = gpu
-    except:
-        info["gpu"] = None
-
-    return info
-
-system_info = get_system_info()
-print(system_info)
 time.sleep(2)
 print("Downloading files...")
 
