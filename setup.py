@@ -1,4 +1,4 @@
-import os,time,sys,threading,platform,msvcrt,psutil,socket,subprocess, urllib.request
+import os,time,sys,threading,platform,psutil,socket,subprocess, urllib.request
 systemguess = platform.system().lower()
 syst = ["Linux","windows","Darwin(mac)"]
 allowed = " ".join(syst) 
